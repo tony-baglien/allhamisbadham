@@ -13,27 +13,31 @@ function App() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        alert(`the phrase you entered was : ${phrase}`);
+        !phrase
+            ? alert("This won't work if you don't enter a phrase")
+            : alert(`the phrase you entered was : ${phrase}`);
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="w-screen h-screen bg-blue-powder flex items-center justify-center flex-col"
-        >
-            <Input
-                labelClass="block mb-2 text-3xl text-gray-800"
-                phrase="Enter your phrase"
-                inputClass="w-full shadow appearance-none border-none rounded py-2 px-3 mb-4 text-2xl text-blue-gray uppercase focus:outline-none"
-                placeholder=""
-            />
-            <button
-                className="block border-none shadow-lg py-2 px-6 text-3xl rounded-lg text-white bg-blue-gray"
-                type="submit"
+        <div className="w-full h-screen bg-blue-powder flex items-center justify-center">
+            <form
+                onSubmit={handleSubmit}
+                className="w-8/12 h-1/2 bg-slate-200 shadow-xl rounded flex items-center justify-center flex-col"
             >
-                Generate
-            </button>
-        </form>
+                <Input
+                    labelClass="block mb-2 text-3xl text-gray-600"
+                    phrase="Enter your phrase"
+                    inputClass="w-full shadow appearance-none border-none rounded py-2 px-3 mb-4 text-2xl text-slate-600 uppercase focus:outline-none"
+                    placeholder=""
+                />
+                <button
+                    className="block border-none shadow-lg py-2 px-6 text-3xl rounded-lg text-white bg-blue-gray"
+                    type="submit"
+                >
+                    Generate
+                </button>
+            </form>
+        </div>
     );
 }
 

@@ -102,7 +102,7 @@ function App() {
     };
 
     return (
-        <div className="min-w-[100vw] h-screen bg-blue-powder flex items-center justify-center overflow-hidden">
+        <>
             <Container customClasses="inputContainer" hide={showResults}>
                 <form
                     onSubmit={handleSubmit}
@@ -131,10 +131,10 @@ function App() {
                     </button>
                 </form>
             </Container>
-            <div className="resultsContainer whitespace-nowrap">
+            <div className="resultsContainer w-fit text-8xl text-slate-900">
                 {showResults ? <Results /> : null}
             </div>
-        </div>
+        </>
     );
 }
 

@@ -16,3 +16,6 @@ body {
     height: 100%;
     background-color: #92afd7;
 }
+.dark #root {
+    background-color: #482b6c;
+}

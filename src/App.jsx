@@ -4,15 +4,16 @@ import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
 //TODO
-// Back Feature
 // Refine random word logic
-//Dark MOde
-// Feature: Add random phrase generator
+// Feature: insert phrase into input
+// feature: add an explanation icon and modal (linking to github)
 
 import anime from "animejs";
 import { useEffect, useRef, useState } from "react";
 
 import Container from "./components/container";
+import ClickMoreBtn from "./components/ClickMoreBtn";
+import GoAgainBtn from "./components/GoAgainBtn";
 
 function App() {
     const [playing, setPlaying] = useState(false);
@@ -24,6 +25,7 @@ function App() {
     const shakeAnimation = useRef(false);
 
     const inputRef = useRef(null);
+    const allHamRef = useRef(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -34,6 +36,22 @@ function App() {
         playing ? animation.current.pause() : animation.current.play();
         setPhrase(inputRef.current.value);
         setPlaying(true);
+    };
+
+    const handleBackClick = () => {
+        setShowResults(false);
+        inputRef.current.value = "";
+        anime({
+            targets: ".inputContainer",
+            translateY: 0,
+            easing: "easeOutElastic(1, .6)",
+            duration: 3000,
+            autoplay: false,
+        }).play();
+    };
+
+    const handleAutoFill = () => {
+        inputRef.current.value = "All HAM IS BAD HAM IF YOU ARE SAGE";
     };
 
     useEffect(() => {
@@ -71,6 +89,7 @@ function App() {
         });
     }, []);
 
+    //TODO: WOrk on animation stagger
     useEffect(() => {
         wordAnimation.current = anime({
             targets: ".resultsContainer span",
@@ -90,7 +109,8 @@ function App() {
         let wordItems = shuffledArray.map((word, index) => {
             return (
                 <span
-                    className={`word-${index} inline-block uppercase opacity-0 pl-8`}
+                    className={`word-${index} inline-block uppercase opacity-0
+                     pl-8`}
                     key={index}
                 >
                     {word}
@@ -98,7 +118,13 @@ function App() {
             );
         });
 
-        return <div>{wordItems}</div>;
+        return (
+            <div className="resultsContainer w-fit text-8xl text-slate-900 dark:text-slate-200">
+                <div className="">{wordItems}</div>
+                <ClickMoreBtn input={inputRef.current.value} />
+                <GoAgainBtn handleClick={handleBackClick} />
+            </div>
+        );
     };
 
     return (
@@ -110,13 +136,13 @@ function App() {
                 >
                     <div className="w-3/4">
                         <label
-                            className="block mb-2 text-3xl text-gray-600"
+                            className="block mb-2 text-3xl text-gray-600 dark:text-gray-200"
                             htmlFor="phrase"
                         >
                             Enter your phrase
                         </label>
                         <input
-                            className="w-full shadow appearance-none border-none rounded py-2 px-3 mb-4 text-2xl text-slate-600 uppercase focus:outline-none"
+                            className="w-full shadow appearance-none border-none rounded py-2 px-3 mb-4 text-2xl dark:bg-dm-green-light text-slate-600 dark:text-gray-200 uppercase focus:outline-none"
                             type="text"
                             id="phrase"
                             name="phrase"
@@ -124,16 +150,21 @@ function App() {
                         />
                     </div>
                     <button
-                        className="block border-none shadow-lg py-2 px-6 text-3xl rounded-lg text-white bg-blue-gray"
+                        className="block border-none shadow-lg py-2 px-6 text-3xl rounded-lg text-white bg-blue-gray dark:bg-dm-green-light"
                         type="submit"
                     >
                         Generate
                     </button>
+                    <button
+                        ref={allHamRef}
+                        onClick={handleAutoFill}
+                        className="mt-8 text-base underline text-green-light dark:text-white hover:text-green-dark transition-colors"
+                    >
+                        All Ham is bad ham...
+                    </button>
                 </form>
             </Container>
-            <div className="resultsContainer w-fit text-8xl text-slate-900">
-                {showResults ? <Results /> : null}
-            </div>
+            {showResults ? <Results /> : null}
         </>
     );
 }

@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCloudMoon, faSun } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
-import AboutModal from "./aboutModal";
+import AboutModal from "AboutModal";
 
 const DarkmodeToggle = () => {
     const [dark, setDark] = useState(false);
